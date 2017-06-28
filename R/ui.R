@@ -26,7 +26,7 @@
 #'   if missing defaults to the local copy distributed with shinyURL
 #' @rdname shinyURL
 #' @export
-shinyURL.ui = function(display = TRUE, label = "Share URL", width = "100%", copyURL = TRUE, tinyURL = TRUE, ZeroClipboard.swf) {
+shinyURL.ui = function(display = TRUE, label = "Share URL", width = "100%",copyval="Копировать",copytitle="заголовок",tinyurl="Сжать",tinytitle="Сжать", copyURL = TRUE, tinyURL = TRUE, ZeroClipboard.swf) {
   if (missing(ZeroClipboard.swf)) {
     addResourcePath("shinyURL", system.file("zeroclipboard", package = "shinyURL"))
     ZeroClipboard.swf = "shinyURL/ZeroClipboard.swf"
@@ -55,7 +55,7 @@ shinyURL.ui = function(display = TRUE, label = "Share URL", width = "100%", copy
         ## Copy button
         if ( isTRUE(copyURL) )
           tagList(
-            tags$button(id=".copyToClipboard", icon("clipboard"), "Copy", title="Copy to clipboard", type="button", class="btn btn-default", "data-clipboard-target"=inputId),
+            tags$button(id=".copyToClipboard", icon("clipboard"), copyval, title=copytitle, type="button", class="btn btn-default", "data-clipboard-target"=inputId),
             includeScript(system.file("zeroclipboard", "ZeroClipboard.min.js", package="shinyURL"), type="text/javascript"),
             tags$script(
               type="text/javascript",
@@ -66,7 +66,7 @@ shinyURL.ui = function(display = TRUE, label = "Share URL", width = "100%", copy
         
         ## TinyURL button
         if ( isTRUE(tinyURL) )
-          actionButton(".getTinyURL", "TinyURL", icon=icon("compress"), title="Shorten URL")
+          actionButton(".getTinyURL", tinyurl, icon=icon("compress"), title=tinytitle)
       )
     }
   )
